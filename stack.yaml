@@ -2,13 +2,14 @@ flags: {}
 resolver: lts-11.22
 packages:
 - '.'
+- location: https://github.com/timbod7/adl/archive/8844fc2346f606e912d56d44a177e3fb5ca0d59d.zip
+  subdirs:
+  - haskell/utils
+  - haskell/runtime
+  - haskell/compiler-lib
+  - haskell/compiler
+  extra-dep: true
 extra-deps:
-  - location: https://github.com/timbod7/adl/archive/8844fc2346f606e912d56d44a177e3fb5ca0d59d.zip
-    subdirs:
-    - haskell/utils
-    - haskell/runtime
-    - haskell/compiler-lib
-    - haskell/compiler
   - amazonka-1.6.1
   - amazonka-core-1.6.1
   - amazonka-ecr-1.6.1
