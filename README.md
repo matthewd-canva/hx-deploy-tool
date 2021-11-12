@@ -29,3 +29,13 @@ It defaults to ../etc/hx-deploy-tool.json (relative to the executable).
 ```
 
 More information is available in the [help text](doc/help.md)
+
+## Building
+
+```sh
+cd scripts
+./gen-adl.sh
+./docker-build.sh
+# wait a very long time
+cp /tmp/hx-deploy-tool.* .
+```
