@@ -301,11 +301,12 @@ data ToolConfig = ToolConfig
     , tc_deployContexts :: [DeployContext]
     , tc_deployMode :: DeployMode
     , tc_healthCheck :: (ADL.Sys.Types.Maybe HealthCheckConfig)
+    , tc_nginxImage :: T.Text
     }
     deriving (Prelude.Eq,Prelude.Ord,Prelude.Show)
 
 mkToolConfig :: BlobStoreConfig -> [DeployContext] -> ToolConfig
-mkToolConfig releases deployContexts = ToolConfig "/opt/releases" "/opt/etc/deployment" "/opt/var/log/hx-deploy-tool.log" "/opt" "/opt/var/www" "hxdeploytoolcert" "" releases deployContexts DeployMode_select (Prelude.Just (HealthCheckConfig "/health-check" "/"))
+mkToolConfig releases deployContexts = ToolConfig "/opt/releases" "/opt/etc/deployment" "/opt/var/log/hx-deploy-tool.log" "/opt" "/opt/var/www" "hxdeploytoolcert" "" releases deployContexts DeployMode_select (Prelude.Just (HealthCheckConfig "/health-check" "/")) "nginx:1.13.0"
 
 instance AdlValue ToolConfig where
     atype _ = "config.ToolConfig"
@@ -322,6 +323,7 @@ instance AdlValue ToolConfig where
         , genField "deployContexts" tc_deployContexts
         , genField "deployMode" tc_deployMode
         , genField "healthCheck" tc_healthCheck
+        , genField "nginxImage" tc_nginxImage
         ]
     
     jsonParser = ToolConfig
@@ -336,6 +338,7 @@ instance AdlValue ToolConfig where
         <*> parseField "deployContexts"
         <*> parseFieldDef "deployMode" DeployMode_select
         <*> parseFieldDef "healthCheck" (Prelude.Just (HealthCheckConfig "/health-check" "/"))
+        <*> parseFieldDef "nginxImage" "nginx:1.13.0"
 
 data Verbosity
     = Verbosity_quiet
